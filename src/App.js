@@ -17,7 +17,7 @@ function App() {
     } 
   },[])
 
-  const basename = process.env.NODE_ENV === 'production' ? '' : '';
+  const basename = process.env.NODE_ENV === 'production' ? 'final_project' : '';
 
   return (
   <Router basename={basename}>
