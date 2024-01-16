@@ -1,24 +1,33 @@
-import logo from './logo.svg';
+import React,{ useState,useEffect} from 'react'
 import './App.css';
+import Navbar from './components/Navbar';
+import Login from './components/Login';
+import Main from './components/Main';
+import { BrowserRouter as Router } from 'react-router-dom';
+import {ProductContext} from './components/ProductContext';
+
 
 function App() {
+  const [isLogin, setIsLogin] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState()
+
+  useEffect(()=> {
+    if(localStorage.getItem('isLogin')==='true') {
+      setIsLogin(true)
+    } 
+  },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <Router>
+    <ProductContext.Provider value={{ selectedProduct, setSelectedProduct }}>
+      <div>
+      <Navbar isLogin={isLogin } setIsLogin={setIsLogin}/>
+      {
+        isLogin ? <Main /> : <Login setIsLogin = {setIsLogin}/>
+      }
+      </div>
+    </ProductContext.Provider>
+  </Router>
   );
 }
 
